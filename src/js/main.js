@@ -294,8 +294,6 @@ function isInteger(obj){
  	for(var i=0;i<bets.length;i++){
 		var rk=parseInt(key);//当前停在的项目
 		var tk=parseInt(bets[i].key)-1;//下注的目标项目
-		// console.log(rk,squareItemConfigs[rk].name,tk,squareItemConfigs[tk].name);
-		// console.log("tk-v:",bets[i].value);
 		if(bets[i].value>0){//当下注大于0时才进入判断
 			if((rk==tk||rk-1==tk)){
 				isGetBonus=true;
@@ -431,12 +429,16 @@ function createStartButton(){
 
 	stage.addChild(container);
 
+	container.on("touchend",startRoll);
 	container.on("click",startRoll);
 }
 function createBetItem(key,callback){
 	var container=new PIXI.Container();
 	container.interactive=true;
-	container.on('click',function(){
+	container.on('touchend',function(){
+		if(callback)callback(this);
+	});
+	container.on("click",function(){
 		if(callback)callback(this);
 	});
 
